@@ -21,7 +21,7 @@ namespace DemandMenagement.Api.Controllers
 
             await endpoint.Send<IRegisterDemandCommand>(registerDemandModel);
 
-            return Ok();
+            return Ok("Your demand has been received");
         }
     }
 }

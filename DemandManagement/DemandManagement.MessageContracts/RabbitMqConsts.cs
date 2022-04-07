@@ -8,7 +8,7 @@ namespace DemandManagement.MessageContracts
 {
     public class RabbitMqConsts
     {
-        public const string RabbitMqUri = "rabbitmq://localhost/";
+        public const string RabbitMqUri = "rabbitmq://localhost/demand/";
         public const string UserName = "guest";
         public const string Password = "guest";
         public const string RegisterDemandServiceQueue = "registerdemand.service";

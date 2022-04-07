@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace DemandManagement.MessageContracts
 {
-    public interface IRegisterDemandEvent
+    public interface IRegisteredDemandEvent
     {
-        
+        public Guid DemandId { get; set; }
+
     }
 }
