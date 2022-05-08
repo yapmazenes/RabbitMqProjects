@@ -1,0 +1,20 @@
+﻿<script src="~/microsoft-signalr/signalr.min.js"></script>
+<script src="~/jquery/jquery.min.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://localhost:5003/notificationhub")
+        .build();
+
+    connection.start();
+    let count = 0;
+    connection.on("receiveProductNotification", message => {
+        console.log(message)
+        $("#message").append("<p id=\"p_" + ++count + "\" style=\"display:none;\"></p>");
+        $("#p_" + count).html(message.productName + " " + message.quantity + " adet.")
+        $("#p_" + count).fadeIn(2000)
+    });
+</script>
+
+<div id="message">
+
+</div>
