@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/microsoft-signalr/signalr.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var connection = new signalR.HubConnectionBuilder()
+                                        .withUrl("https://localhost:44306/messagehub")
+                                        .build();
+            connection.start();
+
+            connection.on("receivemessage",function (receivedMessage) {
+                console.log("message received: ",receivedMessage);
+                $("div").html(receivedMessage);
+                $("div").fadeIn(2000, ()=>{$("div").fadeOut(2000);});
+            });
+            
+            $("button").click(function () {
+              let email =$("#txtEmail").val();
+              let message=$("#txtMessage").val();
+              console.log(connection.connectionId);
+              $.ajax({
+                type: 'POST',
+                url: 'https://localhost:44306/api/message',
+                data: JSON.stringify({
+                  Email: email,
+                  Message: message,
+                  ConnectionId:connection.connectionId
+              }),
+                success: function(data) { 
+                    $("div").html("We have received your message...");
+                    $("div").fadeIn(2000, ()=>{$("div").fadeOut(2000);});
+                 },
+                contentType: "application/json",
+                dataType: 'json'
+            });
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <div style="background-color:darkgoldenrod;display:none;"></div>
+
+
+    <input type="email" id="txtEmail" placeholder="Email"><br>
+    <input type="text" id="txtMessage" placeholder="text"><br>
+    <button>Send</button>
+</body>
+</html>
